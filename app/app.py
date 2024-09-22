@@ -20,14 +20,14 @@ def webhook():
 
     if event_type == "push":
         handle_push_event(data)
-    elif event_type == "pull_request":
-        handle_pull_request_event(data)
     elif (
         event_type == "pull_request"
         and data["action"] == "closed"
         and data["pull_request"]["merged"]
     ):
         handle_merge_event(data)
+    elif event_type == "pull_request":
+        handle_pull_request_event(data)
 
     return jsonify({"status": "success"}), 200
 
