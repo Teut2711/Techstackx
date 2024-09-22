@@ -1,11 +1,12 @@
 services:
   mongo:
-    image: mongo:latest
-    container_name: mongo
-    ports:
-      - "27017:27017"
+    image: mongo
+    container_name: mongodb
+    environment:
+      - MONGO_INITDB_DATABASE=github
     volumes:
-      - mongo-data:/data/db
+      - ./data:/data/db
+    restart: on-failure
 
   backend:
     build: .
@@ -15,9 +16,6 @@ services:
     depends_on:
       - mongo
     environment:
-      - MONGO_URI=mongodb://mongo:27017/
+      - MONGO_URI=mongodb://mongo:27017/github  
     volumes:
-      - .:/app
-
-volumes:
-  mongo-data:
+      - ./app:/app
