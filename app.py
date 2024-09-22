@@ -12,6 +12,7 @@ collection = db["events"]
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
+    print(request.data)
     data = request.json
     data["timestamp"] = datetime.strptime(data["timestamp"], "%Y-%m-%dT%H:%M:%SZ")
     collection.insert_one(data)
